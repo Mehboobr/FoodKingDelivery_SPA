@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { Colors } from '../constants/colors';
-import Images from '../assets/images/index';
 import useAuthStore from '../store/authStore';
 import useConfigStore from '../store/configStore';
 
@@ -42,7 +41,8 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
-      <Image source={Images.splashLogo} style={styles.logo} resizeMode="contain" />
+      <View style={styles.mark}><Text style={styles.markText}>E</Text></View>
+      <Text style={styles.name}>Encore Driver</Text>
     </View>
   );
 };
@@ -54,9 +54,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: {
-    width: 200,
-    height: 200,
+  mark: {
+    width: 84,
+    height: 84,
+    borderRadius: 24,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  markText: {
+    color: Colors.white,
+    fontFamily: 'Rubik-Bold',
+    fontSize: 40,
+  },
+  name: {
+    marginTop: 16,
+    color: Colors.font,
+    fontFamily: 'Rubik-Bold',
+    fontSize: 28,
   },
 });
 

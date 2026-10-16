@@ -16,7 +16,7 @@ export const requestLocationPermission = async () => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           title: 'Location Permission',
-          message: 'FoodKing needs your location to open map directions for delivery.',
+          message: 'Encore Driver uses your location to order delivery stops, navigate, and record arrival. Tracking runs only while you are on an active route.',
           buttonPositive: 'Allow',
           buttonNegative: 'Deny',
         }

@@ -17,6 +17,7 @@ import SvgIcon from '../../components/common/SvgIcon';
 import useOrderStore from '../../store/orderStore';
 import useConfigStore from '../../store/configStore';
 import { openDirections } from '../../utils/permissions';
+import useRouteStore from '../../store/routeStore';
 import Images from '../../assets/images/index';
 
 const SectionTitle = ({ title }) => (
@@ -39,6 +40,9 @@ const OrderDetailsScreen = ({ navigation, route }) => {
   const [showCollectDialog, setShowCollectDialog] = useState(false);
 
   const order = orderDetails;
+  const routePlan = useRouteStore((state) => state.route);
+  const markArrived = useRouteStore((state) => state.markArrived);
+  const stop = routePlan?.stops?.find((item) => item.orderId === order?.id);
 
   useEffect(() => {
     if (orderId) getOrderDetails(orderId);
@@ -53,10 +57,19 @@ const OrderDetailsScreen = ({ navigation, route }) => {
 
   const handleConfirmDelivery = () => {
     if (!order) return;
-    if (order.payment_status === 10) {
-      setShowCollectDialog(true);
-    } else {
-      setShowConfirmDialog(true);
+    navigation.navigate('ProofOfDelivery', { orderId: order.id });
+  };
+
+  const handleArrive = async () => {
+    if (!stop) {
+      Toast.show({ type: 'error', text1: 'Plan and start the route before recording arrival.' });
+      return;
+    }
+    try {
+      await markArrived(stop.id);
+      Toast.show({ type: 'success', text1: 'Arrival recorded. The shipment is not delivered yet.' });
+    } catch (err) {
+      Toast.show({ type: 'error', text1: err?.response?.data?.message || 'Could not record arrival' });
     }
   };
 
@@ -79,6 +92,7 @@ const OrderDetailsScreen = ({ navigation, route }) => {
 
   const getPaymentMethod = () => {
     if (!order) return '—';
+    if (order.payment_method === 4) return 'Cheque';
     if (order.transaction) return String(order.transaction.payment_method);
     if (order.order_type === 5) return Strings.cashOnDelivery;
     if (order.order_type === 10) return Strings.pickAndPay;
@@ -306,6 +320,14 @@ const OrderDetailsScreen = ({ navigation, route }) => {
             variant="outline"
             style={styles.actionBtn}
           />
+          {showConfirmBtn && stop ? (
+            <CustomButton
+              title={stop.status === 'arrived' ? 'Arrived at Customer' : 'Arrive'}
+              onPress={handleArrive}
+              variant="outline"
+              style={styles.actionBtn}
+            />
+          ) : null}
           {showConfirmBtn ? (
             <CustomButton
               title={Strings.confirmDelivery}

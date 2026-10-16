@@ -19,6 +19,7 @@ import useProfileStore from '../../store/profileStore';
 import useAuthStore from '../../store/authStore';
 import useOrderStore from '../../store/orderStore';
 import useConfigStore from '../../store/configStore';
+import { stopLocationTracking } from '../../utils/locationTracker';
 
 const ProfileScreen = ({ navigation }) => {
   const { profileData, branchDataList, pageDataList, loaders, getProfile, updateProfileImage } =
@@ -77,6 +78,7 @@ const ProfileScreen = ({ navigation }) => {
         style: 'destructive',
         onPress: async () => {
           try {
+            await stopLocationTracking();
             await logout();
           } catch (e) {
             console.warn('Logout error:', e);

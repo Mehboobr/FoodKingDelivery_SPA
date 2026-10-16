@@ -11,6 +11,8 @@ import EditProfileScreen from '../screens/Profile/EditProfileScreen';
 import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
 import ChangeLanguageScreen from '../screens/Profile/ChangeLanguageScreen';
 import PagesScreen from '../screens/Profile/PagesScreen';
+import ProofOfDeliveryScreen from '../screens/Delivery/ProofOfDeliveryScreen';
+import RouteMapScreen from '../screens/Route/RouteMapScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +39,16 @@ const AppNavigator = () => (
         name="ConfirmDelivery"
         component={ConfirmDeliveryScreen}
         options={{ animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="ProofOfDelivery"
+        component={ProofOfDeliveryScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="RouteMap"
+        component={RouteMapScreen}
+        options={{ animation: 'slide_from_bottom' }}
       />
       <Stack.Screen
         name="EditProfile"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, Text, Image, StyleSheet, KeyboardAvoidingView, ScrollView,
+  View, Text, StyleSheet, KeyboardAvoidingView, ScrollView,
   Platform, StatusBar, TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,7 +14,6 @@ import CustomButton from '../components/common/CustomButton';
 import SvgIcon from '../components/common/SvgIcon';
 import useAuthStore from '../store/authStore';
 import useProfileStore from '../store/profileStore';
-import Images from '../assets/images/index';
 import storage from '../utils/storage';
 import { registerFCMToken } from '../utils/notifications';
 import { validateLoginForm } from '../utils/validation';
@@ -42,12 +41,6 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   const handleLogin = async () => {
-    // ── DEV BYPASS: skip login API, navigate directly to home ──────────────
-    navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
-    return;
-    // ── END DEV BYPASS ─────────────────────────────────────────────────────
-
-    /* eslint-disable no-unreachable */
     const { isValid, errors: validationErrors } = validateLoginForm(email, password);
     if (!isValid) {
       setErrors(validationErrors);
@@ -80,7 +73,6 @@ const LoginScreen = ({ navigation }) => {
     } finally {
       setLoading(false);
     }
-    /* eslint-enable no-unreachable */
   };
 
   return (
@@ -98,7 +90,8 @@ const LoginScreen = ({ navigation }) => {
         >
           {/* Logo */}
           <View style={styles.logoRow}>
-            <Image source={Images.logo} style={styles.logo} resizeMode="contain" />
+            <View style={styles.brandMark}><Text style={styles.brandMarkText}>E</Text></View>
+            <Text style={styles.brandName}>Encore Driver</Text>
           </View>
 
           {/* Headline */}
@@ -185,10 +178,27 @@ const styles = StyleSheet.create({
   },
   logoRow: {
     marginBottom: Spacing.xxl,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  logo: {
-    height: 40,
-    width: 160,
+  brandMark: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: Spacing.md,
+  },
+  brandMarkText: {
+    color: Colors.white,
+    fontFamily: 'Rubik-Bold',
+    fontSize: 22,
+  },
+  brandName: {
+    fontFamily: 'Rubik-Bold',
+    fontSize: 22,
+    color: Colors.font,
   },
   headlineSection: {
     marginBottom: Spacing.xl,
