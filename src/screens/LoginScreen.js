@@ -97,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
           {/* Headline */}
           <View style={styles.headlineSection}>
             <Text style={styles.welcomeText}>{Strings.welcomeBack}</Text>
-            <Text style={styles.subText}>Sign in to manage your deliveries</Text>
+            <Text style={styles.subText}>Warehouse Deliveries Made Simple</Text>
           </View>
 
           {/* Form Card */}

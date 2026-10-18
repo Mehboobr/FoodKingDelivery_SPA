@@ -162,7 +162,7 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.primaryBtn} onPress={() => navigation.navigate('RouteMap')}>
-                <Text style={styles.primaryBtnText}>Resume Route</Text>
+                <Text style={styles.primaryBtnText}>View Route</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.secondaryBtn} onPress={async () => {

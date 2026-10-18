@@ -4,6 +4,9 @@ export const orderService = {
   getOrderList: () =>
     client.get('/api/frontend/delivery-boy-order'),
 
+  getDriverOrders: (params) =>
+    client.get('/api/v1/driver/orders', { params }),
+
   getOrderDetails: (id) =>
     client.get(`/api/frontend/delivery-boy-order/show/${id}`),
 

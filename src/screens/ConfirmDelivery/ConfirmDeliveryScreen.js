@@ -7,9 +7,13 @@ import { Spacing, BorderRadius } from '../../constants/spacing';
 import { Strings } from '../../constants/strings';
 import CustomButton from '../../components/common/CustomButton';
 import Images from '../../assets/images/index';
+import useRouteStore from '../../store/routeStore';
+import { openDirections } from '../../utils/permissions';
+import { formatDistance, formatDuration } from '../Route/routeFormat';
 
 const ConfirmDeliveryScreen = ({ navigation, route }) => {
   const { orderSerialNo, orderDatetime } = route.params || {};
+  const next = useRouteStore((state) => state.route?.nextStop);
 
   const goHome = () => {
     navigation.reset({
@@ -36,10 +40,26 @@ const ConfirmDeliveryScreen = ({ navigation, route }) => {
           <Text style={styles.datetimeText}>{orderDatetime}</Text>
         ) : null}
 
+        {next ? (
+          <View style={styles.nextCard}>
+            <Text style={styles.nextKicker}>Next stop</Text>
+            <Text style={styles.nextRef}>{next.shipmentReference}</Text>
+            <Text style={styles.nextBody}>{next.customerName}</Text>
+            <Text style={styles.nextBody}>{next.address}</Text>
+            <Text style={styles.nextMeta}>
+              {[formatDistance(next.legDistanceMeters), formatDuration(next.legDurationSeconds)].filter(Boolean).join(' · ')}
+            </Text>
+            <CustomButton title="Go to Next Stop" onPress={() => openDirections(next.latitude, next.longitude)} style={styles.button} />
+          </View>
+        ) : (
+          <Text style={styles.datetimeText}>Route completed</Text>
+        )}
+
         <View style={styles.buttonWrapper}>
           <CustomButton
             title={Strings.backToHome}
             onPress={goHome}
+            variant="outline"
             style={styles.button}
           />
         </View>
@@ -93,6 +113,17 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
   },
+  nextCard: {
+    width: '100%',
+    marginTop: Spacing.lg,
+    backgroundColor: Colors.bgColor,
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.md,
+  },
+  nextKicker: { color: Colors.primary, fontFamily: 'Rubik-Medium' },
+  nextRef: { fontFamily: 'Rubik-Bold', fontSize: 18, color: Colors.font, marginTop: 4 },
+  nextBody: { color: Colors.font, marginTop: 4 },
+  nextMeta: { color: Colors.textMuted, marginTop: 4, marginBottom: Spacing.sm },
 });
 
 export default ConfirmDeliveryScreen;

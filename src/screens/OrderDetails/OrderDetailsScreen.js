@@ -41,7 +41,6 @@ const OrderDetailsScreen = ({ navigation, route }) => {
 
   const order = orderDetails;
   const routePlan = useRouteStore((state) => state.route);
-  const markArrived = useRouteStore((state) => state.markArrived);
   const stop = routePlan?.stops?.find((item) => item.orderId === order?.id);
 
   useEffect(() => {
@@ -57,20 +56,15 @@ const OrderDetailsScreen = ({ navigation, route }) => {
 
   const handleConfirmDelivery = () => {
     if (!order) return;
-    navigation.navigate('ProofOfDelivery', { orderId: order.id });
+    navigation.navigate(stop?.status === 'arrived' ? 'CustomerSignature' : 'Arrival', { orderId: order.id });
   };
 
-  const handleArrive = async () => {
+  const handleArrive = () => {
     if (!stop) {
       Toast.show({ type: 'error', text1: 'Plan and start the route before recording arrival.' });
       return;
     }
-    try {
-      await markArrived(stop.id);
-      Toast.show({ type: 'success', text1: 'Arrival recorded. The shipment is not delivered yet.' });
-    } catch (err) {
-      Toast.show({ type: 'error', text1: err?.response?.data?.message || 'Could not record arrival' });
-    }
+    navigation.navigate('Arrival', { orderId: order.id });
   };
 
   const doChangeStatus = async () => {

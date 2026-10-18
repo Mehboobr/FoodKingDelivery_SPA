@@ -11,8 +11,13 @@ import EditProfileScreen from '../screens/Profile/EditProfileScreen';
 import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
 import ChangeLanguageScreen from '../screens/Profile/ChangeLanguageScreen';
 import PagesScreen from '../screens/Profile/PagesScreen';
-import ProofOfDeliveryScreen from '../screens/Delivery/ProofOfDeliveryScreen';
+import CustomerSignatureScreen from '../screens/Delivery/CustomerSignatureScreen';
+import PaymentCollectionScreen from '../screens/Delivery/PaymentCollectionScreen';
+import ChequeDetailsScreen from '../screens/Delivery/ChequeDetailsScreen';
+import DeliveryReviewScreen from '../screens/Delivery/DeliveryReviewScreen';
 import RouteMapScreen from '../screens/Route/RouteMapScreen';
+import NavigationScreen from '../screens/Route/NavigationScreen';
+import ArrivalScreen from '../screens/Delivery/ArrivalScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,13 +47,43 @@ const AppNavigator = () => (
       />
       <Stack.Screen
         name="ProofOfDelivery"
-        component={ProofOfDeliveryScreen}
+        component={CustomerSignatureScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="CustomerSignature"
+        component={CustomerSignatureScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="PaymentCollection"
+        component={PaymentCollectionScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="ChequeDetails"
+        component={ChequeDetailsScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="DeliveryReview"
+        component={DeliveryReviewScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
         name="RouteMap"
         component={RouteMapScreen}
         options={{ animation: 'slide_from_bottom' }}
+      />
+      <Stack.Screen
+        name="Navigation"
+        component={NavigationScreen}
+        options={{ animation: 'slide_from_bottom' }}
+      />
+      <Stack.Screen
+        name="Arrival"
+        component={ArrivalScreen}
+        options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
         name="EditProfile"
